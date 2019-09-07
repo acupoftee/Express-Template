@@ -1,0 +1,43 @@
+{
+  "name": "express-template",
+  "version": "1.0.0",
+  "description": "Template for creating non authenticated REST API's with Express.",
+  "main": "server.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acupoftee/Express-Template.git"
+  },
+  "keywords": [
+    "express",
+    "rest",
+    "api"
+  ],
+  "author": "@dustybuttongg on Twitter",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/acupoftee/Express-Template/issues"
+  },
+  "homepage": "https://github.com/acupoftee/Express-Template#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.6.13"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.3.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.2"
+  }
+}
