@@ -4,7 +4,7 @@
   "description": "Template for creating non authenticated REST API's with Express.",
   "main": "server.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard | snazzy"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "mocha": "^6.2.0",
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.2",
+    "snazzy": "^8.0.0",
+    "standard": "^10.0.3"
   }
 }
