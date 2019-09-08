@@ -73,7 +73,7 @@ router.patch('/examples/:id', removeBlankFields, asyncHelper(async (req, res, ne
   const example = await Example.findById(req.params.id)
 
   // Update the resource with the new data
-  example.updateOne(req.body.example)
+  await example.updateOne(req.body.example)
 
   // Send a 204 if the update was successful
   res.sendStatus(204)
@@ -91,7 +91,7 @@ router.delete('/examples/:id', asyncHelper(async (req, res, next) => {
   const example = await Example.findById(req.params.id)
 
   // Delete the resource
-  example.deleteOne()
+  await example.deleteOne()
 
   // Send a 204 if the resource was successfully deleted
   res.sendStatus(204)
