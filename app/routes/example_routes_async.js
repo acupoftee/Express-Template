@@ -74,7 +74,7 @@ router.patch('/examples/:id', removeBlankFields, async (req, res, next) => {
     const example = await Example.findById(req.params.id)
 
     // Update the resource with the new data
-    example.updateOne(req.body.example)
+    await example.updateOne(req.body.example)
 
     // Send a 204 if the update was successful
     res.sendStatus(204)
