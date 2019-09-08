@@ -7,6 +7,9 @@ const Example = require('../models/example')
 // middleware for removing blank object fields
 const removeBlankFields = require('../middleware/removeBlankFields')
 
+// add custom error handlers
+const handle404 = require('../../lib/customErrors').handle404
+
 // Instantiate a new router to handle request routes
 const router = express.Router()
 
@@ -78,6 +81,7 @@ router.delete('/examples/:id', (req, res, next) => {
   // Find the resource by its ID
   Example.findById(req.params.id)
     // Delete the resource
+    .then(handle404)
     .then(example => example.deleteOne())
     // Send a 204 if the resource was successfully deleted
     .then(() => res.sendStatus(204))

@@ -23,7 +23,7 @@ describe('Examples', () => {
     const record = await Example.create(exampleParams)
     exampleId = record._id
   })
-
+  
   // test GET /examples
   // should return all available examples in an array
   describe('GET /examples', () => {
@@ -48,6 +48,7 @@ describe('Examples', () => {
       .end((err, res) => {
         res.should.have.status(200)
         res.body.example.should.be.a('object')
+        res.body.example._id.should.eq(exampleId.toString())
         res.body.example.first_name.should.eql('Angela')
         done()
       })
@@ -113,7 +114,7 @@ describe('Examples', () => {
 
   // test DELETE /examples/:id
   // should return a 404 if resource doesn't exist
-  // should return 204 if resource exists
+  // should return 204 if resource existsgit s
   describe('DELETE /examples/:id', () => {
     it('should return a 204 if resource is destroyed', done => {
       chai.request(server)
@@ -124,11 +125,49 @@ describe('Examples', () => {
         })
     })
 
-    it('should return a 404 if the resource doesn\'t exist', () => {
+    it('should return a 404 if the resource doesn\'t exist', done => {
       chai.request(server)
         .delete(`/examples/${exampleId}`)
         .end((err, res) => {
           res.should.have.status(404)
+          done()
+        })
+    })
+  })
+
+    // test POST /examples
+  // should not post with missing fields
+  // should post with both required fields
+  describe('POST /examples', () => {
+    it('should not POST with empty fields', done => {
+      const noLastName = {
+        first_name: 'Sombra',
+        hero_class: 'Damage'
+      }
+      chai.request(server)
+        .post('/examples')
+        .send({ example: noLastName })
+        .end((err, res) => {
+          res.should.have.status(422)
+          done()
+        })
+    })
+
+    it('should POST with correct fields', done => {
+      const correctFormat = {
+        first_name: 'Jack',
+        last_name: 'Morrison'
+      }
+      chai.request(server)
+        .post('/examples')
+        .send({ example: correctFormat })
+        .end((err, res) => {
+          res.should.have.status(201)
+          res.body.example.should.be.a('object')
+          res.body.example.should.have.property('first_name')
+          res.body.example.should.have.property('last_name')
+          res.body.example.first_name.should.eql(correctFormat.first_name)
+          res.body.example.last_name.should.eql(correctFormat.last_name)
           done()
         })
     })

@@ -23,6 +23,7 @@ router.post('/examples', async (req, res, next) => {
     res.status(201).json({ example: example.toObject() })
   } catch (error) {
     // handle error
+    res.sendStatus(422)
     next()
   }
 })
@@ -94,7 +95,7 @@ router.delete('/examples/:id', async (req, res, next) => {
     const example = await Example.findById(req.params.id)
 
     // Delete the resource
-    example.deleteOne()
+    await example.deleteOne()
 
     // Send a 204 if the resource was successfully deleted
     res.sendStatus(204)
