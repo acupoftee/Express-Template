@@ -4,7 +4,8 @@
   "description": "Template for creating non authenticated REST API's with Express.",
   "main": "server.js",
   "scripts": {
-    "test": "standard | snazzy"
+    "test": "mocha --exit",
+    "lint": "standard | snazzy"
   },
   "repository": {
     "type": "git",
