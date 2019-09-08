@@ -18,16 +18,10 @@ describe('Examples', () => {
     last_name: 'Ziegler'
   }
 
-  // Create an example resource first
-  before(done => {
-    Example.deleteMany({})
-      .then(() => Example.create(exampleParams))
-      .then(record => {
-        // save the example resource id
-        exampleId = record._id
-        done()
-      })
-      .catch(console.error)
+  before(async () => {
+    await Example.deleteMany({})
+    const record = await Example.create(exampleParams)
+    exampleId = record._id
   })
 
   // test GET /examples
@@ -39,7 +33,7 @@ describe('Examples', () => {
         .end((err, res) => {
           res.should.have.status(200)
           res.body.examples.should.be.a('array')
-          res.body.examples.length.should.be.eql(1)
+          res.body.examples.length.should.eql(1)
           done()
         })
     })
@@ -57,6 +51,63 @@ describe('Examples', () => {
         res.body.example.first_name.should.eql('Angela')
         done()
       })
+    })
+  })
+
+  // test PATCH /examples/:id
+  // should update properties of a resource
+  // should not overwrite fields with empty strings
+  // should return the updated proeprty with a GET request
+  describe('PATCH /examples:id', () => {
+    let exampleId
+
+    const newFields = {
+      first_name: 'Captain',
+      last_name: 'Amari'
+    }
+
+    before(async () => {
+      const record = await Example.create(newFields)
+      exampleId = record._id
+    })
+
+    it('should update fields', done => {
+      chai.request(server)
+        .patch(`/examples/${exampleId}`)
+        .send({ example: newFields })
+        .end((err, res) => {
+          res.should.have.status(204)
+          done()
+        })
+    })
+
+    it('should show resource with updated fields', done => {
+      chai.request(server)
+        .get(`/examples/${exampleId}`)
+        .end((err, res) => {
+          res.should.have.status(200)
+          res.body.example.should.be.a('object')
+          res.body.example.first_name.should.eql(newFields.first_name)
+          res.body.example.last_name.should.eql(newFields.last_name)
+          done()
+        })
+    })
+
+    it('should not overwrite fields with empty strings', done => {
+      chai.request(server)
+        .patch(`/examples/${exampleId}`)
+        .send({example: { first_name: 'Ana', last_name: '' }})
+        .then(() => {
+          chai.request(server)
+          .get(`/examples/${exampleId}`)
+          .end((err, res) => {
+            res.should.have.status(200)
+            res.body.example.should.be.a('object')
+            res.body.example.first_name.should.eql('Ana')
+            res.body.example.last_name.should.eql(newFields.last_name)
+            done()
+          })
+        })
     })
   })
 })
