@@ -110,4 +110,27 @@ describe('Examples', () => {
         })
     })
   })
+
+  // test DELETE /examples/:id
+  // should return a 404 if resource doesn't exist
+  // should return 204 if resource exists
+  describe('DELETE /examples/:id', () => {
+    it('should return a 204 if resource is destroyed', done => {
+      chai.request(server)
+        .delete(`/examples/${exampleId}`)
+        .end((err, res) => {
+          res.should.have.status(204)
+          done()
+        })
+    })
+
+    it('should return a 404 if the resource doesn\'t exist', () => {
+      chai.request(server)
+        .delete(`/examples/${exampleId}`)
+        .end((err, res) => {
+          res.should.have.status(404)
+          done()
+        })
+    })
+  })
 })
