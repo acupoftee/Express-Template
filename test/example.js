@@ -33,7 +33,7 @@ describe('Examples', () => {
   // test GET /examples
   // should return all available examples in an array
   describe('GET /examples', () => {
-    it ('should get all example resources', done => {
+    it('should get all examples', done => {
       chai.request(server)
         .get('/examples')
         .end((err, res) => {
@@ -42,6 +42,21 @@ describe('Examples', () => {
           res.body.examples.length.should.be.eql(1)
           done()
         })
+    })
+  })
+
+  // test GET /examples/:id
+  // should get one example
+  describe('GET /examples/:id', () => {
+    it('should get one example', done => {
+      chai.request(server)
+      .get(`/examples/${exampleId}`)
+      .end((err, res) => {
+        res.should.have.status(200)
+        res.body.example.should.be.a('object')
+        res.body.example.first_name.should.eql('Angela')
+        done()
+      })
     })
   })
 })
