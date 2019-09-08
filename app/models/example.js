@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 // assign a new Mongoose Schema with
 // attributes in here.
 const exampleSchema = new mongoose.Schema({
-  firstName: {
+  first_name: {
     type: String,
     required: true
   },
-  lastName: {
+  last_name: {
     type: String,
     required: true
   }
