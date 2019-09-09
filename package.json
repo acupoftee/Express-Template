@@ -4,8 +4,11 @@
   "description": "Template for creating non authenticated REST API's with Express.",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "mocha --exit",
-    "lint": "standard | snazzy"
+    "lint": "standard | snazzy",
+    "server": "nodemon server.js",
+    "debug-server": "DEBUG=express:* nodemon server.js"
   },
   "repository": {
     "type": "git",
